@@ -5,22 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.weiyu.android.databinding.ActivityMainBinding;
+import com.weiyu.android.databinding.ActivityAppBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class AppActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
     }
 
-    private ActivityMainBinding binding;
+    private ActivityAppBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityAppBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Example of a call to a native method

@@ -1,8 +1,5 @@
 package com.weiyu.common.manager;
 
-import android.app.Notification;
-import android.content.Context;
-
 import androidx.core.app.NotificationCompat;
 
 import com.blankj.utilcode.util.NotificationUtils;
@@ -40,6 +37,7 @@ public class NotificationManager {
             builder.setContentTitle("标题");
             builder.setShowWhen(true);
         }
+
     };
 
     public void createNotificationSimple(){
