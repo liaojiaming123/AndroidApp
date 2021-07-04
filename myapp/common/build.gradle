@@ -1,27 +1,21 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
 }
-apply plugin: 'com.didi.drouter'
 def androidID = rootProject.ext.androidID
 def dependenciesID = rootProject.ext.dependenciesID
-def appID = rootProject.ext.appID
+
 android {
     compileSdkVersion androidID.compileSdkVersion
     buildToolsVersion androidID.buildToolsVersion
 
     defaultConfig {
-        applicationId appID.app
         minSdkVersion androidID.minSdkVersion
         targetSdkVersion androidID.targetSdkVersion
         versionCode androidID.versionCode
         versionName androidID.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags ''
-            }
-        }
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -30,28 +24,34 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets{
+        main {
+            if (isRelease) {
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.10.2'
-        }
-    }
-    buildFeatures {
-        viewBinding true
-    }
 }
 
 dependencies {
+//    implementation fileTree(dir: "libs", includes: ["*.jar"])
     implementation dependenciesID.appcompat
     implementation dependenciesID.material
     implementation dependenciesID.constraintlayout
-    implementation project(":common")
+    implementation 'com.blankj:utilcodex:1.30.6'
+    implementation 'com.yanzhenjie:permission:2.0.3'
 
     testImplementation dependenciesID.junit
     androidTestImplementation dependenciesID.androidx_test_ext
     androidTestImplementation dependenciesID.androidx_test_espresso
+
+    api router.drouter
 }
